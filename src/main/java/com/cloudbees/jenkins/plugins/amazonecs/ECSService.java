@@ -151,6 +151,7 @@ class ECSService {
      * If no, register a new task definition with desired parameters and return the new ARN.
      */
     String registerTemplate(final ECSCloud cloud, final ECSTaskTemplate template, String clusterArn) {
+        LOGGER.log(Level.INFO, "Registering template: {0}", template.getDisplayName());
         final AmazonECSClient client = getAmazonECSClient();
         
         String familyName = fullQualifiedTemplateName(cloud, template);
@@ -223,7 +224,7 @@ class ECSService {
         }
         
         if(templateMatchesExistingContainerDefinition && templateMatchesExistingVolumes && templateMatchesExistingTaskRole) {
-            LOGGER.log(Level.FINE, "Task Definition already exists: {0}", new Object[]{describeTaskDefinition.getTaskDefinition().getTaskDefinitionArn()});
+            LOGGER.log(Level.INFO, "Task Definition already exists: {0}", new Object[]{describeTaskDefinition.getTaskDefinition().getTaskDefinitionArn()});
             return describeTaskDefinition.getTaskDefinition().getTaskDefinitionArn();
         } else {
             final RegisterTaskDefinitionRequest request = new RegisterTaskDefinitionRequest()                
