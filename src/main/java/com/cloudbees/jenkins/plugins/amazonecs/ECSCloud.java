@@ -332,6 +332,7 @@ public class ECSCloud extends Cloud {
                 for (String arn : client.listClusters().getClusterArns()) {
                     options.add(arn);
                 }
+                LOGGER.log(Level.INFO, "Total api requests = " + options.size());
                 return options;
             } catch (AmazonClientException e) {
                 // missing credentials will throw an "AmazonClientException: Unable to load AWS credentials from any provider in the chain"
